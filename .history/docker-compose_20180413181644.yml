@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+  web:
+    container_name : redis-web
+    build: .
+    ports:
+      - 9080:80
+    volumes:
+      - ./src/html:/var/www/html/
+    networks:
+      - redis-net
+    depends_on:
+      - redis
+  redis:
+    hostname: redis
+    image: redis:alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - ./data/redis:/data
+    networks:
+      - redis-net
+    
+networks:
+  redis-net:

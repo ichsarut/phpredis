@@ -1,0 +1,9 @@
+FROM php:7.0-apache
+MAINTAINER Ichsarut Yauvasuta <ichsarut@gmail.com>
+
+RUN docker-php-ext-enable redis \
+  && echo 'redis' >> /usr/src/php-available-exts \
+  && echo "extension=redis.so" > /usr/local/etc/php/conf.d/redis.ini
+
+
+    

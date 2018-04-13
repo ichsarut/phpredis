@@ -1,0 +1,15 @@
+FROM php:7.0-apache
+
+RUN apt-get update && apt-get install build-essential -y --no-install-recommends apt-utils
+
+RUN apt-get install git -y -q \
+  && git clone -b php7 https://github.com/phpredis/phpredis.git \
+  && mv phpredis/ /etc/ && cd /etc/phpredis 
+
+RUN phpize && ./configure && make && make install
+
+RUN echo 'extension=redis.so' >> /etc/php/7.0/apache2/php.ini \
+  && touch /etc/php/mods-available/redis.ini \
+  && echo 'extension=redis.so' > /etc/php/mods-available/redis.ini \
+  && phpenmod redis && service apache2 restart
+  

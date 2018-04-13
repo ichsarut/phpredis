@@ -1,0 +1,20 @@
+version: '2'
+
+services:
+  web:
+    container_name : redis-web
+    build: .
+    ports:
+      - 9080:80
+    volumes:
+      - ./src/html:/var/www/html/
+    links:
+      - redis:redis
+  redis:
+    container_name: redis
+    image: redis:alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - ./config/redis-config.conf:/etc/redis/redis.conf
+    
+      

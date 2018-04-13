@@ -1,0 +1,14 @@
+FROM php:7.0-apache
+
+RUN sudo apt-get update && sudo apt-get install build-essential -y
+RUN sudo apt-get install tcl8.5 -y
+RUN sudo wget http://download.redis.io/releases/redis-stable.tar.gz \
+  && sudo tar xzf redis-stable.tar.gz
+RUN sudo mv redis-stable redis
+RUN cd redis && sudo make && taskset -c 1 sudo make test
+RUN sudo make install
+
+RUN sudo echo 'extension=redis.so' >> /etc/php/7.0/apache2/php.ini \
+  && touch /etc/php/mods-available/redis.ini
+  && echo 'extension=redis.so' > /etc/php/mods-available/redis.ini
+  && sudo phpenmod redis && sudo service apache2 restart

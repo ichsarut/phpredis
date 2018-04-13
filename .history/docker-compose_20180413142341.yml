@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  web:
+    build: .
+    port: 
+      - "8001:80"
+    volumes:
+      - ./src/html:/var/www/html/
+    links:
+      - redis:devcache1
+  redis:
+    image: "redis:alpine"
+  db: 
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: myDB
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 212224
+      MYSQL_ROOT_PASSWORD: 212224
+    ports: 
+      - "33061:3306"
