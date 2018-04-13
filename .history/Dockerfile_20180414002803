@@ -1,2 +1,0 @@
-FROM php:7.1-apache
-RUN apk add php7=7.1.9-r0

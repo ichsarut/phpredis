@@ -1,7 +1,0 @@
-FROM php:7.1-apache
-
-RUN sudo apt-get update && sudo apt-get install build-essential -y
-RUN sudo apt-get install tcl8.5 -y
-RUN sudo wget http://download.redis.io/releases/redis-stable.tar.gz \
-  && sudo tar xzf redis-stable.tar.gz
-RUN sudo mv redis-stable redis
